@@ -1,59 +1,15 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // Aplicar estilos al <nav>
-  const nav = document.querySelector("nav");
-  nav.style.display = "flex";
-  nav.style.justifyContent = "center";
-  nav.style.backgroundColor = "#394049";
-  nav.style.padding = "1rem 0";
-
-  // Estilo para cada enlace principal
-  const links = nav.querySelectorAll("nav > .menu-item > a");
-  links.forEach(link => {
-    link.style.color = "white";
-    link.style.textDecoration = "none";
-    link.style.fontWeight = "bold";
-    link.style.padding = "0.5rem 1rem";
-    link.style.display = "inline-block";
-  });
-
-  // Estilo para los submenús
-  const menuItems = nav.querySelectorAll(".menu-item");
-  menuItems.forEach(item => {
-    item.style.position = "relative";
-    item.style.margin = "0 20px";
-
-    const submenu = item.querySelector(".submenu");
-    if (submenu) {
-      submenu.style.display = "none";
-      submenu.style.position = "absolute";
-      submenu.style.top = "100%";
-      submenu.style.left = "0";
-      submenu.style.backgroundColor = "#00A499";
-      submenu.style.minWidth = "160px";
-      submenu.style.zIndex = "1";
-
-      const subLinks = submenu.querySelectorAll("a");
-      subLinks.forEach(sub => {
-        sub.style.display = "block";
-        sub.style.padding = "0.5rem 1rem";
-        sub.style.color = "white";
-        sub.style.textDecoration = "none";
-
-        sub.addEventListener("mouseover", () => {
-          sub.style.backgroundColor = "#394049";
-        });
-        sub.addEventListener("mouseout", () => {
-          sub.style.backgroundColor = "#00A499";
-        });
-      });
-
-      // Mostrar/ocultar al pasar el mouse
-      item.addEventListener("mouseover", () => {
-        submenu.style.display = "block";
-      });
-      item.addEventListener("mouseout", () => {
-        submenu.style.display = "none";
-      });
-    }
-  });
+  // Inyectar estilos globales como <style>
+  const estilo = `
+    nav { display: flex; justify-content: center; background-color: #394049; padding: 1rem 0; }
+    nav a { color: white; text-decoration: none; font-weight: bold; padding: 0.5rem 1rem; display: inline-block; }
+    .menu-item { position: relative; margin: 0 20px; }
+    .submenu { display: none; position: absolute; top: 100%; left: 0; background-color: #00A499; min-width: 160px; z-index: 1; }
+    .submenu a { display: block; padding: 0.5rem 1rem; color: white; text-decoration: none; }
+    .submenu a:hover { background-color: #394049; }
+    .menu-item:hover .submenu { display: block; }
+  `;
+  const styleTag = document.createElement('style');
+  styleTag.textContent = estilo;
+  document.head.appendChild(styleTag);
 });
