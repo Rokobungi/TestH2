@@ -1,34 +1,29 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const menu = document.createElement("nav");
-  menu.style.display = "flex";
-  menu.style.justifyContent = "center";
-  menu.style.backgroundColor = "#394049";
-  menu.style.padding = "1rem 0";
+  // Aplicar estilos al <nav>
+  const nav = document.querySelector("nav");
+  nav.style.display = "flex";
+  nav.style.justifyContent = "center";
+  nav.style.backgroundColor = "#394049";
+  nav.style.padding = "1rem 0";
 
-  const opciones = [
-    { texto: "Opción 1", sub: ["Subopción 1.1", "Subopción 1.2"] },
-    { texto: "Opción 2", sub: ["Subopción 2.1", "Subopción 2.2"] },
-    { texto: "Opción 3", sub: ["Subopción 3.1", "Subopción 3.2"] },
-    { texto: "Inicio", link: "https://www.google.com" }
-  ];
+  // Estilo para cada enlace principal
+  const links = nav.querySelectorAll("nav > .menu-item > a");
+  links.forEach(link => {
+    link.style.color = "white";
+    link.style.textDecoration = "none";
+    link.style.fontWeight = "bold";
+    link.style.padding = "0.5rem 1rem";
+    link.style.display = "inline-block";
+  });
 
-  opciones.forEach((opcion, index) => {
-    const item = document.createElement("div");
+  // Estilo para los submenús
+  const menuItems = nav.querySelectorAll(".menu-item");
+  menuItems.forEach(item => {
     item.style.position = "relative";
     item.style.margin = "0 20px";
 
-    const enlace = document.createElement("a");
-    enlace.textContent = opcion.texto;
-    enlace.href = opcion.link || "#";
-    enlace.style.color = "white";
-    enlace.style.textDecoration = "none";
-    enlace.style.fontWeight = "bold";
-    enlace.style.padding = "0.5rem 1rem";
-    enlace.style.display = "inline-block";
-    item.appendChild(enlace);
-
-    if (opcion.sub) {
-      const submenu = document.createElement("div");
+    const submenu = item.querySelector(".submenu");
+    if (submenu) {
       submenu.style.display = "none";
       submenu.style.position = "absolute";
       submenu.style.top = "100%";
@@ -37,31 +32,28 @@ document.addEventListener("DOMContentLoaded", () => {
       submenu.style.minWidth = "160px";
       submenu.style.zIndex = "1";
 
-      opcion.sub.forEach(textoSub => {
-        const subEnlace = document.createElement("a");
-        subEnlace.textContent = textoSub;
-        subEnlace.href = "#";
-        subEnlace.style.display = "block";
-        subEnlace.style.padding = "0.5rem 1rem";
-        subEnlace.style.color = "white";
-        subEnlace.style.textDecoration = "none";
-        subEnlace.addEventListener("mouseover", () => {
-          subEnlace.style.backgroundColor = "#394049";
+      const subLinks = submenu.querySelectorAll("a");
+      subLinks.forEach(sub => {
+        sub.style.display = "block";
+        sub.style.padding = "0.5rem 1rem";
+        sub.style.color = "white";
+        sub.style.textDecoration = "none";
+
+        sub.addEventListener("mouseover", () => {
+          sub.style.backgroundColor = "#394049";
         });
-        subEnlace.addEventListener("mouseout", () => {
-          subEnlace.style.backgroundColor = "#00A499";
+        sub.addEventListener("mouseout", () => {
+          sub.style.backgroundColor = "#00A499";
         });
-        submenu.appendChild(subEnlace);
       });
 
-      item.appendChild(submenu);
-
-      item.addEventListener("mouseover", () => submenu.style.display = "block");
-      item.addEventListener("mouseout", () => submenu.style.display = "none");
+      // Mostrar/ocultar al pasar el mouse
+      item.addEventListener("mouseover", () => {
+        submenu.style.display = "block";
+      });
+      item.addEventListener("mouseout", () => {
+        submenu.style.display = "none";
+      });
     }
-
-    menu.appendChild(item);
   });
-
-  document.getElementById("botonera-fing").appendChild(menu);
 });
